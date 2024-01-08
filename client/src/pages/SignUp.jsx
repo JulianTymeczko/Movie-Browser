@@ -1,10 +1,21 @@
-import { useContext } from "react";
+import { useContext, useEffect, useState } from "react";
 import { LoginContext } from "../App";
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
 import "./SignUp.css";
+import Input from "@mui/material/Input";
+import { useNavigate } from "react-router-dom";
 export default function SignUp() {
+  let navigate = useNavigate();
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [repeatPassword, setRepeatPassword] = useState("");
   const { isLoggedIn, setisLoggedIn } = useContext(LoginContext);
+  useEffect(() => {
+    if (isLoggedIn) {
+      navigate("/");
+    }
+  }, [isLoggedIn]);
   return (
     <>
       <div className="sign-up">
@@ -13,20 +24,26 @@ export default function SignUp() {
           <h1>Sign Up</h1>
           <div className="sign-up-inputs">
             {" "}
-            <TextField
-              id="standard-basic"
-              label="Email address"
-              variant="standard"
+            <Input
+              placeholder="Email address"
+              value={email}
+              onChange={(e) => {
+                setEmail(e.target.value);
+              }}
             />
-            <TextField
-              id="standard-basic"
-              label="Password"
-              variant="standard"
+            <Input
+              placeholder="Password"
+              value={password}
+              onChange={(e) => {
+                setPassword(e.target.value);
+              }}
             />
-            <TextField
-              id="standard-basic"
-              label="Repeat password"
-              variant="standard"
+            <Input
+              placeholder="Repeat password"
+              value={repeatPassword}
+              onChange={(e) => {
+                setRepeatPassword(e.target.value);
+              }}
             />
             <Button
               variant="contained"
@@ -35,6 +52,14 @@ export default function SignUp() {
                 backgroundColor: "rgb(252, 71, 71);",
                 color: "rgb(255, 255, 255)",
                 textTransform: "none",
+              }}
+              onClick={() => {
+                console.log(email);
+                console.log(password);
+                console.log(password === repeatPassword);
+                if (email && password && repeatPassword === password) {
+                  setisLoggedIn(true);
+                }
               }}
             >
               Create an account

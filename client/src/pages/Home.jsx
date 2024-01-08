@@ -3,7 +3,7 @@ import { LoginContext } from "../App";
 import { useNavigate } from "react-router-dom";
 export default function Home() {
   let navigate = useNavigate();
-  const { isLoggedIn, setisLoggedIn } = useContext(LoginContext);
+  const { isLoggedIn } = useContext(LoginContext);
   useEffect(() => {
     if (!isLoggedIn) {
       navigate("/sign-up");
